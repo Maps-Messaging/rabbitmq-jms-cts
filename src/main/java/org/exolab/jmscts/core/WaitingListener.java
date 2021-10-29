@@ -44,12 +44,12 @@
  */
 package org.exolab.jmscts.core;
 
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
 import javax.jms.Message;
 import javax.jms.MessageListener;
 
 import org.apache.log4j.Logger;
-
-import EDU.oswego.cs.dl.util.concurrent.Semaphore;
 
 
 /**
@@ -137,7 +137,7 @@ public class WaitingListener extends DelegatingListener {
      * @throws InterruptedException if interrupted
      */
     public boolean waitForReceipt(long msecs) throws InterruptedException {
-        return _receiptLock.attempt(msecs);
+        return _receiptLock.tryAcquire(msecs, TimeUnit.MILLISECONDS);
     }
 
     /**

@@ -44,9 +44,9 @@
  */
 package org.exolab.jmscts.core;
 
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
 import org.apache.log4j.Logger;
-import EDU.oswego.cs.dl.util.concurrent.Semaphore;
-
 
 /**
  * Helper class to run an action in a separate thread, and catch any
@@ -177,7 +177,7 @@ public abstract class ThreadedAction extends Thread {
      */
     public boolean waitForCompletion(long timeout)
         throws InterruptedException {
-        boolean completed = _completedLock.attempt(timeout);
+        boolean completed = _completedLock.tryAcquire(timeout, TimeUnit.MILLISECONDS);
         if (completed) {
             _completedLock.release();
         }

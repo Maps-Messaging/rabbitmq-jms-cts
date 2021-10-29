@@ -44,8 +44,9 @@
  */
 package org.exolab.jmscts.core;
 
-import EDU.oswego.cs.dl.util.concurrent.Semaphore;
 
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Helper class to synchronize on the completion of tasks
@@ -95,7 +96,7 @@ public class CompletionListener {
      */
     public boolean waitForCompletion(long timeout)
         throws InterruptedException {
-        boolean completed = _completedLock.attempt(timeout);
+        boolean completed = _completedLock.tryAcquire(timeout, TimeUnit.MILLISECONDS);
         if (completed) {
             _completedLock.release();
         }
@@ -118,7 +119,7 @@ public class CompletionListener {
      * @return the number of completed tasks
      */
     public int getCompleted() {
-        return _expected + (int) _completedLock.permits() - 1;
+        return _expected + _completedLock.availablePermits() - 1;
     }
 
 }

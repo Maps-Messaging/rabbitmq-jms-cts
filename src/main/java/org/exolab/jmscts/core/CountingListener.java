@@ -44,10 +44,10 @@
  */
 package org.exolab.jmscts.core;
 
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
 import javax.jms.Message;
 import javax.jms.MessageListener;
-
-import EDU.oswego.cs.dl.util.concurrent.Semaphore;
 
 
 /**
@@ -131,7 +131,7 @@ public class CountingListener implements MessageListener {
      */
     public boolean waitForCompletion(long timeout)
         throws InterruptedException {
-        boolean completed = _completedLock.attempt(timeout);
+        boolean completed = _completedLock.tryAcquire(timeout, TimeUnit.MILLISECONDS);
         if (completed) {
             _completedLock.release();
         }
