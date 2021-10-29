@@ -1,19 +1,21 @@
 <?xml version="1.0"?>
 
 <!-- ====================================================================== -->
-<!-- Provider configuration file                                            -->
+<!-- Sample provider configuration file                                     -->
 <!--                                                                        -->
-<!-- This configures JMS CTS to test RabbitMQ's JMS                         -->
+<!-- This configures JMS CTS to test OpenJMS                                -->
 <!-- ====================================================================== -->
 
 <configuration>
 
   <provider>
-    <name>RabbitJMS</name>
-    <class>com.rabbitmq.integration.jmscts.RabbitJmsCtsProvider</class>
-    <config>
-      <path>config/rabbit.xml</path>
-    </config>
+      <name>ProtonJ</name>
+      <class>io.mapsmessaging.protocol.impl.amqp.jms.JmsProvider</class>
+      <paths>
+        <path>D:\messaging\src\messaging\target\classes</path>
+        <path>D:\messaging\src\messaging\target\test-classes</path>
+      </paths>
+      <config></config>
   </provider>
 
 </configuration>

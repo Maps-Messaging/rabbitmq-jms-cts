@@ -10,8 +10,8 @@
  </exclude>                                                                          <!-- We have not yet implemented XA, we may never -->
   <exclude> <factory>XATopicConnectionFactory</factory>
  </exclude>                                                                          <!-- We have not yet implemented XA, we may never -->
-  <exclude> <factory>QueueConnectionFactory</factory>
- </exclude>                                                                          <!-- We do not test queue selectors, we may never -->
+  <include> <factory>QueueConnectionFactory</factory>
+ </include>                                                                          <!-- We do not test queue selectors, we may never -->
   <include> <factory>TopicConnectionFactory</factory>
  </include>
 
@@ -136,8 +136,12 @@
  </include>
   <include> <receiver>durable_asynchronous</receiver>
  </include>
-  <include> <receiver>browser</receiver>
- </include>
+ <exclude> <receiver>shared_durable_synchronous</receiver>
+ </exclude>
+ <exclude> <receiver>shared_durable_asynchronous</receiver>
+ </exclude>
+  <exclude> <receiver>browser</receiver>
+ </exclude>
 
   <!-- ====================================================================== -->
   <!-- Below are tests we yet have to test                                    -->
