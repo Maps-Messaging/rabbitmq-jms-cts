@@ -515,7 +515,7 @@ public class MapMessageTest extends AbstractMessageTestCase
 
         getNull(message, Byte.class, key, NumberFormatException.class);
         getNull(message, Short.class, key, NumberFormatException.class);
-        getNull(message, Character.class, key, NumberFormatException.class);
+        getNull(message, Character.class, key, NullPointerException.class);
         getNull(message, Integer.class, key, NumberFormatException.class);
         getNull(message, Long.class, key, NumberFormatException.class);
         getNull(message, Float.class, key, NumberFormatException.class);

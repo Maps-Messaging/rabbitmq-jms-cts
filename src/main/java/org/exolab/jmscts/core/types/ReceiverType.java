@@ -81,6 +81,28 @@ public class ReceiverType implements java.io.Serializable {
     public static final ReceiverType BROWSER = new ReceiverType(BROWSER_TYPE, "browser");
 
     /**
+     * The shared_durable_asynchronous type
+     */
+    public static final int SHARED_DURABLE_ASYNCHRONOUS_TYPE = 5;
+
+    /**
+     * The instance of the durable_asynchronous type
+     */
+    public static final ReceiverType SHARED_DURABLE_ASYNCHRONOUS = new ReceiverType(SHARED_DURABLE_ASYNCHRONOUS_TYPE, "shared_durable_asynchronous");
+
+
+    /**
+     * The shared_durable_asynchronous type
+     */
+    public static final int SHARED_DURABLE_SYNCHRONOUS_TYPE = 6;
+
+    /**
+     * The instance of the durable_asynchronous type
+     */
+    public static final ReceiverType SHARED_DURABLE_SYNCHRONOUS = new ReceiverType(SHARED_DURABLE_SYNCHRONOUS_TYPE, "shared_durable_synchronous");
+
+
+    /**
      * Field _memberTable
      */
     private static java.util.Hashtable<String, ReceiverType> _memberTable = init();
@@ -139,6 +161,8 @@ public class ReceiverType implements java.io.Serializable {
         members.put("durable_synchronous", DURABLE_SYNCHRONOUS);
         members.put("durable_asynchronous", DURABLE_ASYNCHRONOUS);
         members.put("browser", BROWSER);
+        members.put("shared_durable_synchronous", SHARED_DURABLE_SYNCHRONOUS);
+        members.put("shared_durable_asynchronous", SHARED_DURABLE_ASYNCHRONOUS);
         return members;
     } //-- java.util.Hashtable init()
 

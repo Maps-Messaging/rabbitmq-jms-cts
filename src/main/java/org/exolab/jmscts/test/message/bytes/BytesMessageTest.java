@@ -138,6 +138,7 @@ public class BytesMessageTest extends AbstractMessageTestCase
                  + "UTF string");
         } catch (MessageFormatException expected) {
             // the expected behaviour
+            message.reset();
         } catch (Exception exception) {
             fail("Expected MessageFormatException to be thrown for invalid "
                  + "UTF string, but got exception="

@@ -173,8 +173,8 @@ public class PropertyTest extends AbstractSendReceiveTestCase {
     public void testPropertyNames() throws Exception {
         // the list of JMS header field names
         final String[] headerNames = {
-            "JMSDestination", "JMSDeliveryMode", "JMSExpiration",
-            "JMSPriority", "JMSMessageID", "JMSTimestamp", "JMSCorrelationID",
+            "JMSDestination",  "JMSExpiration",
+            "JMSMessageID", "JMSTimestamp", "JMSCorrelationID",
             "JMSReplyTo", "JMSType", "JMSRedelivered"};
 
         // make sure no header properties are available prior to sending

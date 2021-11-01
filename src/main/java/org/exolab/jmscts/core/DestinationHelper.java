@@ -45,6 +45,7 @@
 package org.exolab.jmscts.core;
 
 import javax.jms.Destination;
+import javax.jms.IllegalStateException;
 import javax.jms.JMSException;
 import javax.jms.Queue;
 import javax.jms.QueueSession;
@@ -181,9 +182,19 @@ public final class DestinationHelper {
     public static void destroy(Destination destination, Administrator admin)
         throws JMSException {
         if (destination instanceof TemporaryQueue) {
-            ((TemporaryQueue) destination).delete();
+            try{
+                ((TemporaryQueue) destination).delete();
+            }
+            catch (IllegalStateException illegalStateException){
+                // Ignore
+            }
         } else if (destination instanceof TemporaryTopic) {
-            ((TemporaryTopic) destination).delete();
+            try{
+                ((TemporaryTopic) destination).delete();
+            }
+            catch (IllegalStateException illegalStateException){
+                // Ignore
+            }
         } else {
             destroy(getName(destination), admin);
         }

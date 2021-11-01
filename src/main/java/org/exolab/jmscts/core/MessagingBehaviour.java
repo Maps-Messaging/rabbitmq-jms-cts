@@ -80,6 +80,11 @@ public class MessagingBehaviour {
     private boolean _durable = false;
 
     /**
+    *  If true then the subscription is shared
+     */
+    private boolean _shared = false;
+
+    /**
      * The message priority on send
      */
     private int _priority = Message.DEFAULT_PRIORITY;
@@ -137,6 +142,7 @@ public class MessagingBehaviour {
         _priority = behaviour.getPriority();
         _timeout = behaviour.getTimeout();
         _timeToLive = behaviour.getTimeToLive();
+        _shared = behaviour.getShared();
     }
 
     /**
@@ -211,6 +217,26 @@ public class MessagingBehaviour {
      */
     public boolean getDurable() {
         return _durable;
+    }
+
+    /**
+     * Sets the subscriber shared behaviour
+     *
+     * @param shared if true then the subscription is shared
+     */
+    public void setShared(boolean shared){
+        _shared = shared;
+        if(shared){
+            _durable = true;
+        }
+    }
+    /**
+     * Returns true if the topic subscriber is shared
+     *
+     * @return true if the topic subscriber is shared
+     */
+    public boolean getShared(){
+        return _shared;
     }
 
     /**

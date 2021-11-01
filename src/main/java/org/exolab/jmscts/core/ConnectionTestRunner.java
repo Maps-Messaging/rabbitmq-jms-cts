@@ -138,7 +138,7 @@ public class ConnectionTestRunner extends TestRunner
             ConnectionTestCase connectionTest = (ConnectionTestCase) test;
             Connection connection = null;
 
-            String clientID = null; // "ConnectionTestRunner";
+            String clientID = "ConnectionTestRunner";
             connection = ConnectionFactoryHelper.createConnection(
                 context, clientID);
             if (log.isDebugEnabled()) {

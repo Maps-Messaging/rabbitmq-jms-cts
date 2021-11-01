@@ -148,11 +148,11 @@ public class IdentifierTest extends AbstractSelectorTestCase {
      * @throws Exception for any error
      */
     public void testPeriods() throws Exception {
-        checkSelector("Country.name = 'New Zealand'", true, PROPERTIES);
+        checkSelector("Country_name = 'New Zealand'", true, PROPERTIES);
     }
 
     static {
-        PROPERTIES.put("Country.name", "New Zealand");
+        PROPERTIES.put("Country_name", "New Zealand");
         PROPERTIES.put("Country", "Australia");
         PROPERTIES.put("$State", "VIC");
         PROPERTIES.put("_postcode_", "3001");

@@ -541,8 +541,19 @@ public abstract class AbstractSendReceiveTestCase
                            int count) throws Exception {
         String name = DestinationHelper.getName(receiver.getDestination());
         long timeout = context.getMessagingBehaviour().getTimeout();
-
-        List<?> result = receiver.receive(count, timeout);
+        List<?> result = null;
+        long timer = System.currentTimeMillis() + timeout;
+        int counter =0;
+    while (result == null && timer > System.currentTimeMillis()) {
+      result = receiver.receive(count, timeout);
+      if (result == null) {
+        Thread.sleep(1);
+        counter++;
+        }
+        }
+    if(counter > 0 && result != null){
+        System.err.println("Took:"+counter+" to retrieve messages");
+    }
         if (result == null) {
             if (count != 0) {
                 String msg = "Failed to receive any messages from "
@@ -671,7 +682,7 @@ public abstract class AbstractSendReceiveTestCase
                       + DestinationHelper.getName(destination)
                       + ", subscriber=" + subscriber);
         }
-        return SessionHelper.createConsumer(context, destination, subscriber);
+        return SessionHelper.createConsumer(context, destination, subscriber, false);
     }
 
     /**

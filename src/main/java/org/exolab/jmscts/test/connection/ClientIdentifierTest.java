@@ -157,7 +157,7 @@ public class ClientIdentifierTest extends AbstractConnectionTestCase {
                 first.setClientID(CLIENT_ID);
                 fail("Managed to set the same client identifier on two "
                      + "different connections");
-            } catch (InvalidClientIDException expected) {
+            } catch (IllegalStateException expected) {
                 // the expected behaviour
             } catch (Exception exception) {
                 fail("Expected setClientID to throw , InvalidClientIDException"

@@ -166,11 +166,9 @@ public class SendReceiveTestInvoker extends MessageTestInvoker {
      */
     @Override
     protected void tearDown() throws Exception {
-        try {
-            super.tearDown();
-        } finally {
-            destroyDestinations(_destinations);
-        }
+        destroyDestinations(_destinations);
+        super.tearDown();
+        _destinations.clear();
     }
 
     /**

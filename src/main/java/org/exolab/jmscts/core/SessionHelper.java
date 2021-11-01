@@ -79,86 +79,95 @@ public final class SessionHelper {
     private SessionHelper() {
     }
 
-    /**
-     * Create a message consumer for the supplied session and destination.
-     * The name argument only applies to topic destinations.
-     * @param sessionType
-     *
-     * @param session the session
-     * @param destination the destination to consume messages from
-     * @param name if non-null, and the session is a TopicSession, then a
-     * durable subscriber will be returned, otherwise the argument is ignored.
-     * @return a new consumer
-     * @throws JMSException if any of the JMS operations fail
-     */
-    private final static MessageConsumer createConsumer(
-        Class<?> sessionType, Session session, Destination destination, String name)
-        throws JMSException {
+  /**
+   * Create a message consumer for the supplied session and destination. The name argument only
+   * applies to topic destinations.
+   *
+   * @param sessionType
+   * @param session the session
+   * @param destination the destination to consume messages from
+   * @param name if non-null, and the session is a TopicSession, then a durable subscriber will be
+   *     returned, otherwise the argument is ignored.
+   * @return a new consumer
+   * @throws JMSException if any of the JMS operations fail
+   */
+  private static MessageConsumer createConsumer(
+      Class<?> sessionType, Session session, Destination destination, String name, boolean shared)
+      throws JMSException {
 
-        MessageConsumer result = null;
-        if (sessionType == XAQueueSession.class) {
-            session = ((XAQueueSession) session).getQueueSession();
-        } else if (sessionType == XATopicSession.class) {
-            session = ((XATopicSession) session).getTopicSession();
-        }
-
-        if (isQueueType(sessionType)) {
-            Queue queue = (Queue) destination;
-            result = ((QueueSession) session).createReceiver(queue);
-        } else {
-            Topic topic = (Topic) destination;
-            if (name != null) {
-                result = ((TopicSession) session).createDurableSubscriber(
-                    topic, name);
-            } else {
-                result = ((TopicSession) session).createSubscriber(topic);
-            }
-        }
-        return result;
+    MessageConsumer result;
+    if (sessionType == XAQueueSession.class) {
+      session = ((XAQueueSession) session).getQueueSession();
+    } else if (sessionType == XATopicSession.class) {
+      session = ((XATopicSession) session).getTopicSession();
     }
 
-    /**
-     * Create a message consumer for the supplied session and destination and
-     * selector.
-     * The name argument only applies to topic destinations.
-     * @param sessionType
-     *
-     * @param session the session
-     * @param destination the destination to consume messages from
-     * @param name if non-null, and the session is a TopicSession, then a
-     * durable subscriber will be returned, otherwise the argument is ignored.
-     * @param selector the message selector
-     * @param noLocal if the session is a TopicSession, then the subscriber
-     * will be created with the supplied noLocal flag, otherwise the argument
-     * is ignored.
-     * @return a new consumer
-     * @throws JMSException if any of the JMS operations fail
-     */
-    private final static MessageConsumer createConsumer(
-        Class<?> sessionType, Session session, Destination destination, String name,
-        String selector, boolean noLocal) throws JMSException {
-
-        MessageConsumer result = null;
-        if (sessionType == XAQueueSession.class) {
-            session = ((XAQueueSession) session).getQueueSession();
-        } else if (sessionType == XATopicSession.class) {
-            session = ((XATopicSession) session).getTopicSession();
-        }
-
-        if (isQueueType(sessionType)) {
-            Queue queue = (Queue) destination;
-            result = ((QueueSession) session).createReceiver(queue, selector);
+    if (isQueueType(sessionType)) {
+      Queue queue = (Queue) destination;
+      result = ((QueueSession) session).createReceiver(queue);
+    } else {
+      Topic topic = (Topic) destination;
+      if (name != null) {
+        if (shared) {
+          result = session.createSharedDurableConsumer(topic, name);
         } else {
-            Topic topic = (Topic) destination;
-            if (name != null) {
-                result = ((TopicSession) session).createDurableSubscriber(
-                    topic, name, selector, noLocal);
-            } else {
-                result = ((TopicSession) session).createSubscriber(
-                    topic, selector, noLocal);
-            }
+          result = session.createDurableSubscriber(topic, name);
         }
-        return result;
+      } else {
+        result = ((TopicSession) session).createSubscriber(topic);
+      }
+    }
+    return result;
+  }
+
+  /**
+   * Create a message consumer for the supplied session and destination and selector. The name
+   * argument only applies to topic destinations.
+   *
+   * @param sessionType
+   * @param session the session
+   * @param destination the destination to consume messages from
+   * @param name if non-null, and the session is a TopicSession, then a durable subscriber will be
+   *     returned, otherwise the argument is ignored.
+   * @param selector the message selector
+   * @param noLocal if the session is a TopicSession, then the subscriber will be created with the
+   *     supplied noLocal flag, otherwise the argument is ignored.
+   * @return a new consumer
+   * @throws JMSException if any of the JMS operations fail
+   */
+  private static MessageConsumer createConsumer(
+      Class<?> sessionType,
+      Session session,
+      Destination destination,
+      String name,
+      String selector,
+      boolean noLocal,
+      boolean shared)
+      throws JMSException {
+
+    MessageConsumer result = null;
+    if (sessionType == XAQueueSession.class) {
+      session = ((XAQueueSession) session).getQueueSession();
+    } else if (sessionType == XATopicSession.class) {
+      session = ((XATopicSession) session).getTopicSession();
+    }
+
+    if (isQueueType(sessionType)) {
+      Queue queue = (Queue) destination;
+      result = ((QueueSession) session).createReceiver(queue, selector);
+    } else {
+      Topic topic = (Topic) destination;
+      if (name != null) {
+        if (shared) {
+            result = session.createSharedDurableConsumer(topic, name, selector);
+        } else {
+          result = session.createDurableSubscriber(topic, name, selector, noLocal);
+        }
+      } else {
+        result = ((TopicSession) session).createSubscriber(topic, selector, noLocal);
+      }
+    }
+    return result;
     }
 
     /**
@@ -169,7 +178,7 @@ public final class SessionHelper {
      * @return a new producer
      * @throws JMSException if any of the JMS operations fail
      */
-    private final static MessageProducer createProducer(Class<?> sessionType, Session session,
+    private static MessageProducer createProducer(Class<?> sessionType, Session session,
                                                         Destination destination)
         throws JMSException {
         MessageProducer result = null;
@@ -201,10 +210,10 @@ public final class SessionHelper {
      */
     public static MessageConsumer createConsumer(TestContext context,
                                                  Destination destination,
-                                                 String name)
+                                                 String name, boolean shared)
         throws JMSException {
 
-        return createConsumer(context.getSessionType(), context.getSession(), destination, name);
+        return createConsumer(context.getSessionType(), context.getSession(), destination, name, shared);
     }
 
     /**
@@ -232,7 +241,7 @@ public final class SessionHelper {
      * @return a new message receiver
      * @throws JMSException if any of the JMS operations fail
      */
-    private final static MessageReceiver createReceiver(Class<?> sessionType, Session session,
+    private static MessageReceiver createReceiver(Class<?> sessionType, Session session,
                                                         Destination destination,
                                                         MessagingBehaviour behaviour)
         throws JMSException {
@@ -247,8 +256,7 @@ public final class SessionHelper {
             if (behaviour.getDurable()) {
                 name = getSubscriberName();
             }
-            MessageConsumer consumer =
-                createConsumer(sessionType, session, destination, name);
+            MessageConsumer consumer = createConsumer(sessionType, session, destination, name, behaviour.getShared());
             if (behaviour.getReceiptType().equals(ReceiptType.SYNCHRONOUS)) {
                 result = new SynchronousReceiver(session, consumer, name);
             } else {
@@ -272,7 +280,7 @@ public final class SessionHelper {
      * @return a new message receiver
      * @throws JMSException if any of the JMS operations fail
      */
-    private final static MessageReceiver createReceiver(Class<?> sessionType, Session session,
+    private static MessageReceiver createReceiver(Class<?> sessionType, Session session,
                                                  Destination destination,
                                                  MessagingBehaviour behaviour,
                                                  String selector,
@@ -300,7 +308,7 @@ public final class SessionHelper {
      * @return a new message receiver
      * @throws JMSException if any of the JMS operations fail
      */
-    private final static MessageReceiver createReceiver(Class<?> sessionType, Session session,
+    private static MessageReceiver createReceiver(Class<?> sessionType, Session session,
                                                  Destination destination,
                                                  MessagingBehaviour behaviour,
                                                  String name,
@@ -317,8 +325,7 @@ public final class SessionHelper {
             if (behaviour.getDurable() && name == null) {
                 name = getSubscriberName();
             }
-            MessageConsumer consumer = createConsumer(sessionType, session, destination,
-                                                      name, selector, noLocal);
+            MessageConsumer consumer = createConsumer(sessionType, session, destination, name, selector, noLocal, behaviour.getShared());
             if (behaviour.getReceiptType().equals(ReceiptType.SYNCHRONOUS)) {
                 result = new SynchronousReceiver(session, consumer, name);
             } else {
@@ -411,12 +418,12 @@ public final class SessionHelper {
      * @return a new message sender
      * @throws JMSException if any of the JMS operations fail
      */
-    private final static MessageSender createSender(Class<?> sessionType, Session session,
+    private static MessageSender createSender(Class<?> sessionType, Session session,
                                              Destination destination,
                                              MessagingBehaviour behaviour)
         throws JMSException {
 
-        MessageSender result = null;
+        MessageSender result;
         MessageProducer producer = createProducer(sessionType, session, destination);
         if (sessionType == XAQueueSession.class) {
             session = ((XAQueueSession) session).getQueueSession();
