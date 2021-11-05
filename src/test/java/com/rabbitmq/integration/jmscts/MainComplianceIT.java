@@ -3,6 +3,7 @@ package com.rabbitmq.integration.jmscts;
 import java.io.File;
 
 import org.exolab.jmscts.test.ComplianceTestSuite;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -17,39 +18,37 @@ public class MainComplianceIT {
         System.setProperty("jmscts.home", System.getProperty("basedir"));
     }
 
-    @Test
-    public void testAll() throws Exception {
+    @Before
+    public void setup(){
         if (System.getProperty("rabbit.jms.terminationTimeout") == null) {
             System.setProperty("rabbit.jms.terminationTimeout", "1000");
         }
-        String basedir = System.getProperty("basedir");
-        ComplianceTestSuite.main(new String[] { "-output",
-                                                new File(basedir, "target/jmscts-report").getAbsolutePath(),
-                                                "-filter",
-                                                new File(basedir, "config/filter.xml").getAbsolutePath() });
     }
 
     @Test
     public void testSelector() throws Exception {
-        if (System.getProperty("rabbit.jms.terminationTimeout") == null) {
-            System.setProperty("rabbit.jms.terminationTimeout", "1000");
-        }
-        String basedir = System.getProperty("basedir");
-        ComplianceTestSuite.main(new String[] { "-output",
-                                                new File(basedir, "target/jmscts-selector-report").getAbsolutePath(),
-                                                "-filter",
-                                                new File(basedir, "config/selector-filter.xml").getAbsolutePath() });
+        runTests(System.getProperty("basedir"), "target/jmscts-selector-report", "config/selector-filter.xml");
     }
 
     @Test
     public void testBrowse() throws Exception {
-        if (System.getProperty("rabbit.jms.terminationTimeout") == null) {
-            System.setProperty("rabbit.jms.terminationTimeout", "1000");
-        }
-        String basedir = System.getProperty("basedir");
+        runTests(System.getProperty("basedir"), "target/jmscts-browse-report", "config/browse-filter.xml");
+    }
+
+    @Test
+    public void testTopics() throws Exception {
+        runTests(System.getProperty("basedir"), "target/jmscts-topic-report", "config/topic-filter.xml");
+    }
+
+    @Test
+    public void testQueues() throws Exception {
+        runTests(System.getProperty("basedir"), "target/jmscts-queue-report", "config/queue-filter.xml");
+    }
+
+    private void runTests(String basedir, String target, String config){
         ComplianceTestSuite.main(new String[] { "-output",
-                                                new File(basedir, "target/jmscts-browse-report").getAbsolutePath(),
-                                                "-filter",
-                                                new File(basedir, "config/browse-filter.xml").getAbsolutePath() });
+            new File(basedir, target).getAbsolutePath(),
+            "-filter",
+            new File(basedir, config).getAbsolutePath() });
     }
 }

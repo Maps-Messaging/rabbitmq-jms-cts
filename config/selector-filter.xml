@@ -15,10 +15,27 @@
   <include> <factory>TopicConnectionFactory</factory>
  </include>
 
-  <!-- ====================================================================== -->
+
+ <include> <receiver>synchronous</receiver>
+ </include>
+ <include> <receiver>asynchronous</receiver>
+ </include>
+ <include> <receiver>durable_synchronous</receiver>
+ </include>
+ <include> <receiver>durable_asynchronous</receiver>
+ </include>
+ <include> <receiver>shared_durable_synchronous</receiver>
+ </include>
+ <include> <receiver>shared_durable_asynchronous</receiver>
+ </include>
+ <include> <receiver>browser</receiver>
+ </include>
+
+ <!-- ====================================================================== -->
   <!-- The tests below are known to pass                                      -->
   <!-- ====================================================================== -->
-
+ <exclude> <test>org.exolab.jmscts.test.asf.ConnectionConsumerTest.*</test>
+ </exclude>
   <exclude> <test>org.exolab.jmscts.test.connection.AuthTest.*</test>
  </exclude>
   <exclude> <test>org.exolab.jmscts.test.connection.ClientIdentifierTest.*</test>
@@ -127,67 +144,34 @@
  </exclude>
   <exclude> <test>org.exolab.jmscts.test.topic.DurableSubscriberTest.*</test>
  </exclude>
-
-  <include> <receiver>synchronous</receiver>
- </include>
-  <include> <receiver>asynchronous</receiver>
- </include>
-  <include> <receiver>durable_synchronous</receiver>
- </include>
-  <include> <receiver>durable_asynchronous</receiver>
- </include>
- <exclude> <receiver>shared_durable_synchronous</receiver>
- </exclude>
- <exclude> <receiver>shared_durable_asynchronous</receiver>
- </exclude>
-  <exclude> <receiver>browser</receiver>
+ <exclude> <test>org.exolab.jmscts.test.topic.NoLocalTest.*</test>
  </exclude>
 
-  <!-- ====================================================================== -->
-  <!-- Below are tests we yet have to test                                    -->
-  <!-- ====================================================================== -->
 
-  <!-- ====================================================================== -->
-  <!-- and here are tests we know are failing                                 -->
-  <!-- ====================================================================== -->
 
-  <exclude> <test>org.exolab.jmscts.test.topic.NoLocalTest.*</test>
- </exclude>                                                                          <!-- RabbitMQ doesn't support noLocal -->
-
-  <!-- ====================================================================== -->
-  <!-- Here are conditional tests that we think should pass in some cases     -->
-  <!-- ====================================================================== -->
-
-  <include> <test>org.exolab.jmscts.test.selector.AndOperatorTest.*</test>
- </include>                                                                          <!-- RJMS client does support topic selectors -->
-  <include> <test>org.exolab.jmscts.test.selector.OrOperatorTest.*</test>
- </include>                                                                          <!-- RJMS client does support topic selectors -->
-  <include> <test>org.exolab.jmscts.test.selector.InOperatorTest.*</test>
- </include>                                                                          <!-- RJMS client does support topic selectors -->
-  <include> <test>org.exolab.jmscts.test.selector.BetweenOperatorTest.*</test>
- </include>                                                                          <!-- RJMS client does support topic selectors -->
-  <include> <test>org.exolab.jmscts.test.selector.BooleanTest.*</test>
- </include>                                                                          <!-- RJMS client does support topic selectors -->
-  <include> <test>org.exolab.jmscts.test.selector.EmptySelectorTest.*</test>
- </include>                                                                          <!-- RJMS client does support topic selectors -->
-  <include> <test>org.exolab.jmscts.test.selector.FloatTest.*</test>
- </include>                                                                          <!-- RJMS client does support topic selectors -->
-  <include> <test>org.exolab.jmscts.test.selector.IdentifierTest.*</test>
- </include>                                                                          <!-- RJMS client does support topic selectors -->
-  <include> <test>org.exolab.jmscts.test.selector.JMSDeliveryModeTest.*</test>
- </include>                                                                          <!-- RJMS client does support topic selectors -->
-  <include> <test>org.exolab.jmscts.test.selector.JMSPriorityTest.*</test>
- </include>                                                                          <!-- RJMS client does support topic selectors -->
-  <include> <test>org.exolab.jmscts.test.selector.JMSTimestampTest.*</test>
- </include>                                                                          <!-- RJMS client does support topic selectors -->
-  <include> <test>org.exolab.jmscts.test.selector.StringTest.*</test>
- </include>                                                                          <!-- RJMS client does support topic selectors -->
-
-  <!-- ====================================================================== -->
-  <!-- and here are tests that we think should never pass                     -->
-  <!-- ====================================================================== -->
-
-  <exclude> <test>org.exolab.jmscts.test.asf.ConnectionConsumerTest.*</test>
- </exclude>                                                                          <!-- we don't support Connection Consumers -->
+ <include> <test>org.exolab.jmscts.test.selector.AndOperatorTest.*</test>
+ </include>                                                                          <!-- RJMS client does not support queue selectors -->
+ <include> <test>org.exolab.jmscts.test.selector.OrOperatorTest.*</test>
+ </include>                                                                          <!-- RJMS client does not support queue selectors -->
+ <include> <test>org.exolab.jmscts.test.selector.InOperatorTest.*</test>
+ </include>                                                                          <!-- RJMS client does not support queue selectors -->
+ <include> <test>org.exolab.jmscts.test.selector.BetweenOperatorTest.*</test>
+ </include>                                                                          <!-- RJMS client does not support queue selectors -->
+ <include> <test>org.exolab.jmscts.test.selector.BooleanTest.*</test>
+ </include>                                                                          <!-- RJMS client does not support queue selectors -->
+ <include> <test>org.exolab.jmscts.test.selector.EmptySelectorTest.*</test>
+ </include>                                                                          <!-- RJMS client does not support queue selectors -->
+ <include> <test>org.exolab.jmscts.test.selector.FloatTest.*</test>
+ </include>                                                                          <!-- RJMS client does not support queue selectors -->
+ <include> <test>org.exolab.jmscts.test.selector.IdentifierTest.*</test>
+ </include>                                                                          <!-- RJMS client does not support queue selectors -->
+ <include> <test>org.exolab.jmscts.test.selector.JMSDeliveryModeTest.*</test>
+ </include>                                                                          <!-- RJMS client does not support queue selectors -->
+ <include> <test>org.exolab.jmscts.test.selector.JMSPriorityTest.*</test>
+ </include>                                                                          <!-- RJMS client does not support queue selectors -->
+ <include> <test>org.exolab.jmscts.test.selector.JMSTimestampTest.*</test>
+ </include>                                                                          <!-- RJMS client does not support queue selectors -->
+ <include> <test>org.exolab.jmscts.test.selector.StringTest.*</test>
+ </include>                                                                          <!-- RJMS client does not support queue selectors -->
 
 </filter>

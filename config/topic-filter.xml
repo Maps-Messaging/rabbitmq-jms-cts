@@ -1,0 +1,190 @@
+<?xml version="1.0"?>
+
+<!-- ====================================================================== -->
+<!-- RabbitMQ JMS test case filter 2012-SEP-24                              -->
+<!-- ====================================================================== -->
+
+<filter>
+
+  <exclude> <factory>XAQueueConnectionFactory</factory>
+  </exclude>                                                                          <!-- We have not yet implemented XA, we may never -->
+  <exclude> <factory>XATopicConnectionFactory</factory>
+  </exclude>                                                                          <!-- We have not yet implemented XA, we may never -->
+  <exclude> <factory>QueueConnectionFactory</factory>
+  </exclude>
+  <include> <factory>TopicConnectionFactory</factory>
+  </include>
+
+  <!-- ====================================================================== -->
+  <!-- The tests below are known to pass                                      -->
+  <!-- ====================================================================== -->
+
+  <include> <test>org.exolab.jmscts.test.connection.AuthTest.*</test>
+  </include>
+  <include> <test>org.exolab.jmscts.test.connection.ClientIdentifierTest.*</test>
+  </include>
+  <include> <test>org.exolab.jmscts.test.connection.ConnectionCloseTest.*</test>
+  </include>
+  <include> <test>org.exolab.jmscts.test.connection.ListenerTest.*</test>
+  </include>
+  <include> <test>org.exolab.jmscts.test.connection.MetaDataTest.*</test>
+  </include>
+  <include> <test>org.exolab.jmscts.test.connection.ReceiverTest.*</test>
+  </include>
+  <include> <test>org.exolab.jmscts.test.connection.SendReceiveStopTest.*</test>
+  </include>
+  <include> <test>org.exolab.jmscts.test.connection.StopStartTest.*</test>
+  </include>
+  <include> <test>org.exolab.jmscts.test.message.bytes.BytesMessageTest.*</test>
+  </include>
+  <include> <test>org.exolab.jmscts.test.message.clear.ClearTest.*</test>
+  </include>
+  <include> <test>org.exolab.jmscts.test.message.clear.RecoverClearTest.*</test>
+  </include>
+  <include> <test>org.exolab.jmscts.test.message.clear.RollbackClearTest.*</test>
+  </include>
+  <include> <test>org.exolab.jmscts.test.message.clear.SendReceiveClearTest.*</test>
+  </include>
+  <include> <test>org.exolab.jmscts.test.message.close.CloseTest.*</test>
+  </include>
+  <include> <test>org.exolab.jmscts.test.message.copy.BytesMessageTest.*</test>
+  </include>
+  <include> <test>org.exolab.jmscts.test.message.copy.MapMessageTest.*</test>
+  </include>
+  <include> <test>org.exolab.jmscts.test.message.copy.MessageCopyTest.*</test>
+  </include>
+  <include> <test>org.exolab.jmscts.test.message.copy.ObjectMessageTest.*</test>
+  </include>
+  <include> <test>org.exolab.jmscts.test.message.copy.StreamMessageTest.*</test>
+  </include>
+  <include> <test>org.exolab.jmscts.test.message.foreign.ForeignMessageTest.*</test>
+  </include>
+  <include> <test>org.exolab.jmscts.test.message.header.JMSCorrelationIDTest.*</test>
+  </include>
+  <include> <test>org.exolab.jmscts.test.message.header.JMSDestinationTest.*</test>
+  </include>
+  <include> <test>org.exolab.jmscts.test.message.header.JMSMessageIDTest.*</test>
+  </include>
+  <include> <test>org.exolab.jmscts.test.message.header.JMSReplyToTest.*</test>
+  </include>
+  <include> <test>org.exolab.jmscts.test.message.map.MapMessageTest.*</test>
+  </include>
+  <include> <test>org.exolab.jmscts.test.message.object.ObjectMessageTest.*</test>
+  </include>
+  <include> <test>org.exolab.jmscts.test.message.properties.IdentifierTest.*</test>
+  </include>
+  <include> <test>org.exolab.jmscts.test.message.properties.JMSXGroupTest.*</test>
+  </include>
+  <include> <test>org.exolab.jmscts.test.message.properties.PropertyConversionTest.*</test>
+  </include>
+  <include> <test>org.exolab.jmscts.test.message.properties.PropertyTest.*</test>
+  </include>
+  <include> <test>org.exolab.jmscts.test.message.properties.PropertyTypeTest.*</test>
+  </include>
+  <include> <test>org.exolab.jmscts.test.message.readwrite.ReadWriteTest.*</test>
+  </include>
+  <include> <test>org.exolab.jmscts.test.message.readwrite.SendReceiveReadWriteTest.*</test>
+  </include>
+  <include> <test>org.exolab.jmscts.test.message.stream.StreamMessageTest.*</test>
+  </include>
+  <include> <test>org.exolab.jmscts.test.producer.ttl.ExpirationTest.*</test>
+  </include>
+  <include> <test>org.exolab.jmscts.test.producer.ttl.QueueSenderTest.*</test>
+  </include>
+  <include> <test>org.exolab.jmscts.test.producer.ttl.TopicPublisherTest.*</test>
+  </include>
+  <include> <test>org.exolab.jmscts.test.session.AutoAckTest.*</test>
+  </include>
+  <include> <test>org.exolab.jmscts.test.session.clientack.ClientAcknowledgeTest.*</test>
+  </include>
+  <include> <test>org.exolab.jmscts.test.session.clientack.CloseTest.*</test>
+  </include>
+  <include> <test>org.exolab.jmscts.test.session.clientack.RepublishTest.*</test>
+  </include>
+  <include> <test>org.exolab.jmscts.test.session.clientack.SubscriberRedeliveredTest.*</test>
+  </include>
+  <include> <test>org.exolab.jmscts.test.session.CloseTest.*</test>
+  </include>
+  <include> <test>org.exolab.jmscts.test.session.DupsAckTest.*</test>
+  </include>
+  <include> <test>org.exolab.jmscts.test.session.ListenerCloseTest.*</test>
+  </include>
+  <include> <test>org.exolab.jmscts.test.session.MessageListenerTest.*</test>
+  </include>
+  <include> <test>org.exolab.jmscts.test.session.NonTransactedTest.*</test>
+  </include>
+  <include> <test>org.exolab.jmscts.test.session.ReceiverCloseTest.*</test>
+  </include>
+  <include> <test>org.exolab.jmscts.test.session.transacted.CloseTest.*</test>
+  </include>
+  <include> <test>org.exolab.jmscts.test.session.transacted.CommitTest.*</test>
+  </include>
+  <include> <test>org.exolab.jmscts.test.session.transacted.RecoverTest.*</test>
+  </include>
+  <include> <test>org.exolab.jmscts.test.session.transacted.RollbackTest.*</test>
+  </include>
+  <include> <test>org.exolab.jmscts.test.topic.DuplicateDurableSubscriberTest.*</test>
+  </include>
+  <include> <test>org.exolab.jmscts.test.topic.DurableSubscriberTest.*</test>
+  </include>
+
+  <include> <receiver>synchronous</receiver>
+  </include>
+  <include> <receiver>asynchronous</receiver>
+  </include>
+  <include> <receiver>durable_synchronous</receiver>
+  </include>
+  <include> <receiver>durable_asynchronous</receiver>
+  </include>
+  <exclude> <receiver>browser</receiver>
+  </exclude>
+
+  <include> <test>org.exolab.jmscts.test.topic.NoLocalTest.*</test>
+  </include>
+
+  <!-- ====================================================================== -->
+  <!-- Below are tests we yet have to test                                    -->
+  <!-- ====================================================================== -->
+
+  <!-- ====================================================================== -->
+  <!-- and here are tests we know are failing                                 -->
+  <!-- ====================================================================== -->
+
+
+  <!-- ====================================================================== -->
+  <!-- These are run in a different test - See selector-filter.xml            -->
+  <!-- ====================================================================== -->
+
+  <exclude> <test>org.exolab.jmscts.test.selector.AndOperatorTest.*</test>
+  </exclude>                                                                          <!-- RJMS client does not support queue selectors -->
+  <exclude> <test>org.exolab.jmscts.test.selector.OrOperatorTest.*</test>
+  </exclude>                                                                          <!-- RJMS client does not support queue selectors -->
+  <exclude> <test>org.exolab.jmscts.test.selector.InOperatorTest.*</test>
+  </exclude>                                                                          <!-- RJMS client does not support queue selectors -->
+  <exclude> <test>org.exolab.jmscts.test.selector.BetweenOperatorTest.*</test>
+  </exclude>                                                                          <!-- RJMS client does not support queue selectors -->
+  <exclude> <test>org.exolab.jmscts.test.selector.BooleanTest.*</test>
+  </exclude>                                                                          <!-- RJMS client does not support queue selectors -->
+  <exclude> <test>org.exolab.jmscts.test.selector.EmptySelectorTest.*</test>
+  </exclude>                                                                          <!-- RJMS client does not support queue selectors -->
+  <exclude> <test>org.exolab.jmscts.test.selector.FloatTest.*</test>
+  </exclude>                                                                          <!-- RJMS client does not support queue selectors -->
+  <exclude> <test>org.exolab.jmscts.test.selector.IdentifierTest.*</test>
+  </exclude>                                                                          <!-- RJMS client does not support queue selectors -->
+  <exclude> <test>org.exolab.jmscts.test.selector.JMSDeliveryModeTest.*</test>
+  </exclude>                                                                          <!-- RJMS client does not support queue selectors -->
+  <exclude> <test>org.exolab.jmscts.test.selector.JMSPriorityTest.*</test>
+  </exclude>                                                                          <!-- RJMS client does not support queue selectors -->
+  <exclude> <test>org.exolab.jmscts.test.selector.JMSTimestampTest.*</test>
+  </exclude>                                                                          <!-- RJMS client does not support queue selectors -->
+  <exclude> <test>org.exolab.jmscts.test.selector.StringTest.*</test>
+  </exclude>                                                                          <!-- RJMS client does not support queue selectors -->
+
+  <!-- ====================================================================== -->
+  <!-- and here are tests that we think should never pass                     -->
+  <!-- ====================================================================== -->
+
+  <exclude> <test>org.exolab.jmscts.test.asf.ConnectionConsumerTest.*</test>
+  </exclude>                                                                          <!-- we don't support Connection Consumers -->
+
+</filter>
